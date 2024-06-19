@@ -11,7 +11,7 @@ export default function Page() {
                 alt='notebook with pencil'
                 className='lg:w-72 w-40'
                 />
-                <p>
+                <p className='italic font-castoro'>
                     a Board
                 </p>
             </div>
