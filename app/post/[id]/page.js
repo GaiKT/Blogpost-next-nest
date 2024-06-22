@@ -7,12 +7,27 @@ import Image from "next/image";
 import Avatar from '../../image/Avatar.png'
 import UserIcon from '../../image/user-icon.png'
 import Link from "next/link";
-import { useState } from "react";
+import { useState , useEffect } from "react";
 import Comment from "@/app/component/comment";
+import axios from "axios";
+import { useAuth } from "@/contexts/authcontext";
 
 export default function Page({params}) {
 
   const [openComment , setOpenComment] = useState(false)
+  const [posts , setPosts] = useState({})
+  const {state} = useAuth()
+  console.log(posts)
+  console.log(state)
+
+  const getPosts = async () => {
+    const result = await axios.get(`http://localhost:5000/posts/` + params.id)
+    setPosts(result.data)
+  }
+
+  useEffect(()=>{
+    getPosts()
+  },[])
 
   return (
     <div className="flex w-full min-h-screen">
@@ -42,28 +57,28 @@ export default function Page({params}) {
                                 </div>
                             </div>
                             <span className='font-bold'>
-                                Jassica
+                                {state.firstName}
                             </span>
                             <span className="text-grey300">
                                 5mo. ago
                             </span>
                         </div>
                         <p className='bg-[#F3F3F3] w-fit rounded-xl p-1'>
-                            History
+                            {posts.community}
                         </p>
                     </div>
                     <div className="flex flex-col w-full gap-7">
                         <h1 className='font-bold text-xl'>
-                            The Beginning of the End of the World
+                            {posts.title}
                         </h1>
                         <p>
-                            Tall, athletic, handsome with cerulean eyes, he was the kind of hyper-ambitious kid other kids loved to hate and just the type to make a big wager with no margin for error. But on the night before the S.A.T., his father took pity on him and canceled the bet. “I would’ve lost it,” Ackman concedes. He got a 780 on the verbal and a 750 on the math. “One wrong on the verbal, three wrong on the math,” he muses. “I’m still convinced some of the questions were wrong.”
+                            {posts.discription}
                         </p>
                         <div className='flex gap-2 items-center mt-2 text-grey300'>
                             <span>
                                 <FontAwesomeIcon icon={faComment} width={12} height={12}/>
                             </span>
-                            <span className='text-xs'>32 Comments</span>
+                            <span className='text-xs'>{posts.comments?.length} Comments</span>
                         </div>
                     </div>
                     {
@@ -81,103 +96,35 @@ export default function Page({params}) {
                         </button>
                     {
                     openComment &&
-                    <Comment/>
+                    <Comment setOpenComment={setOpenComment} post_id={posts._id} user_id={state._id}/>
                     }
-                    {/* Mobile */}
-                    <dialog id="my_modal_1" className="modal">
-                        <div className="modal-box">
-                            <form className="mt-5">
-                                <textarea 
-                                placeholder="What’s on your mind..."
-                                className="w-full border border-grey100 p-2 rounded-md outline-none"
-                                rows={4}
-                                ></textarea>
-                                <div className="modal-action">
-                                    <form method="dialog">
-                                        <button className="w-24 text-success border border-success rounded-lg py-3">Cancel</button>
-                                    </form>
-                                    <button className="w-24 text-white bg-success rounded-lg py-3" type="submit">Post</button>
-                                </div>
-                            </form>
-                            <div className="modal-action">
-                            </div>
-                        </div>
-                    </dialog>
                 </div>
                 {/* Comments */}
                 <div className="mt-6 flex flex-col gap-6">
-                    <article>
-                        <div className='flex gap-2 items-center'>
-                            <div className="w-10 h-10 rounded-full bg-serface p-2">
-                                <Image src={UserIcon} 
-                                width={48}
-                                />
-                            </div>
-                            <span className='font-bold'>
-                                Wittawat98
-                            </span>
-                            <span className="text-grey300">
-                                12h. ago
-                            </span>
-                        </div>
-                        <p className="pl-14">
-                            Lorem ipsum dolor sit amet consectetur. Purus cursus vel est a pretium quam imperdiet. Tristique auctor sed semper nibh odio iaculis sed aliquet. Amet mollis eget morbi feugiat mi risus eu. Tortor sed sagittis convallis auctor.
-                        </p>
-                    </article>
-                    <article>
-                        <div className='flex gap-2 items-center'>
-                            <div className="w-10 h-10 rounded-full bg-serface p-2">
-                                <Image src={UserIcon} 
-                                width={48}
-                                />
-                            </div>
-                            <span className='font-bold'>
-                                Wittawat98
-                            </span>
-                            <span className="text-grey300">
-                                12h. ago
-                            </span>
-                        </div>
-                        <p className="pl-14">
-                            Lorem ipsum dolor sit amet consectetur. Purus cursus vel est a pretium quam imperdiet. Tristique auctor sed semper nibh odio iaculis sed aliquet. Amet mollis eget morbi feugiat mi risus eu. Tortor sed sagittis convallis auctor.
-                        </p>
-                    </article>
-                    <article>
-                        <div className='flex gap-2 items-center'>
-                            <div className="w-10 h-10 rounded-full bg-serface p-2">
-                                <Image src={UserIcon} 
-                                width={48}
-                                />
-                            </div>
-                            <span className='font-bold'>
-                                Wittawat98
-                            </span>
-                            <span className="text-grey300">
-                                12h. ago
-                            </span>
-                        </div>
-                        <p className="pl-14">
-                            Lorem ipsum dolor sit amet consectetur. Purus cursus vel est a pretium quam imperdiet. Tristique auctor sed semper nibh odio iaculis sed aliquet. Amet mollis eget morbi feugiat mi risus eu. Tortor sed sagittis convallis auctor.
-                        </p>
-                    </article>
-                    <article>
-                        <div className='flex gap-2 items-center'>
-                            <div className="w-10 h-10 rounded-full bg-serface p-2">
-                                <Image src={UserIcon} 
-                                width={48}
-                                />
-                            </div>
-                            <span className='font-bold'>
-                                Wittawat98
-                            </span>
-                            <span className="text-grey300">
-                                12h. ago
-                            </span>
-                        </div>
-                        <p className="pl-14">
-                            Lorem ipsum dolor sit amet consectetur. Purus cursus vel est a pretium quam imperdiet. Tristique auctor sed semper nibh odio iaculis sed aliquet. Amet mollis eget morbi feugiat mi risus eu. Tortor sed sagittis convallis auctor.
-                        </p>
-                    </article>
+                    {
+                        posts.comments?.map((comment , index)=>{
+                            return (
+                                <article key={index}>
+                                    <div className='flex gap-2 items-center'>
+                                        <div className="w-10 h-10 rounded-full bg-serface p-2">
+                                            <Image src={UserIcon} 
+                                            width={48}
+                                            />
+                                        </div>
+                                        <span className='font-bold'>
+                                            {comment.user_id}
+                                        </span>
+                                        <span className="text-grey300">
+                                            12h. ago
+                                        </span>
+                                    </div>
+                                    <p className="pl-14">
+                                        {comment.comment}
+                                    </p>
+                                </article>
+                            );
+                        })
+                    }
                 </div>
             </div>
         </div>

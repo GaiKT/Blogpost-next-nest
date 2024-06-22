@@ -6,6 +6,8 @@ import Link from 'next/link'
 export default function Navbar() {
 
   return (
+    <>
+    {/* is authentication */}
     <nav className='flex w-full justify-between items-center px-8 h-16 bg-green500 text-white max-md:px-4 sticky top-0 z-50'>
         <h1 className='font-castoro italic'>
             a Board
@@ -24,5 +26,7 @@ export default function Navbar() {
             </Link>
         </div>
     </nav>
+    </>
+    
   )
 }

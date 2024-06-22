@@ -1,7 +1,32 @@
-import React from 'react'
-import DropdownCreatePost from './dropdown-create-post';
+"use client"
 
-export default function Createpost() {
+import React, { useState } from 'react'
+import DropdownCreatePost from './dropdown-create-post';
+import axios from 'axios';
+
+export default function Createpost({user_id}) {
+
+  const [title , setTitle] = useState('')
+  const [discription , setDiscription] = useState('')
+  const [community , setCommunity] = useState('')
+
+  const createPost = async () => {
+    try {
+      const result = await axios.post('http://localhost:5000/posts', {
+      title : title ,
+      discription : discription ,
+      community : community,
+      user_id : user_id
+    })
+    console.log(result)
+    } catch (error) {
+      
+    }
+
+    
+  }
+
+
   return (
     <>
       <button 
@@ -17,9 +42,17 @@ export default function Createpost() {
           </form>
           <div className="flex flex-col justify-between gap-3">
             <h1 className="font-bold">Create Post</h1>
-            <DropdownCreatePost/>
-            <input type="text" placeholder="Title" className="w-full border border-grayline rounded-lg p-2"/>
-            <textarea placeholder="What’s on your mind..."
+            <DropdownCreatePost communitySet={setCommunity}/>
+            <input 
+            type="text" 
+            placeholder="Title" 
+            onChange={(e)=>{setTitle(e.target.value)}}
+            value={title}
+            className="w-full border border-grayline rounded-lg p-2"/>
+            <textarea 
+            placeholder="What’s on your mind..."
+            onChange={(e)=>{setDiscription(e.target.value)}}
+            value={discription}
             className="w-full border border-grayline rounded-lg p-2"
             rows={7}
             />
@@ -28,7 +61,9 @@ export default function Createpost() {
             <form method="dialog">
               <button className="w-24 max-md:w-full h-10 text-success border border-success rounded-lg ">Cancel</button>
             </form>
-            <button className="w-24 max-md:w-full h-10 text-white bg-success rounded-lg m-0 " type="submit">Post</button>
+            <button className="w-24 max-md:w-full h-10 text-white bg-success rounded-lg m-0 "
+            onClick={createPost}
+            >Post</button>
           </div>
         </div>
       </dialog>
