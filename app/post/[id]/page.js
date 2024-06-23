@@ -8,9 +8,10 @@ import Avatar from '../../image/Avatar.png'
 import UserIcon from '../../image/user-icon.png'
 import Link from "next/link";
 import { useState , useEffect } from "react";
-import Comment from "@/app/component/comment";
+import {Comment , CommentMobile} from "@/app/component/comment";
 import axios from "axios";
 import { useAuth } from "@/contexts/authcontext";
+import { formatDistanceToNow } from 'date-fns';
 
 export default function Page({params}) {
 
@@ -18,7 +19,6 @@ export default function Page({params}) {
   const [posts , setPosts] = useState({})
   const {state} = useAuth()
   console.log(posts)
-  console.log(state)
 
   const getPosts = async () => {
     const result = await axios.get(`http://localhost:5000/posts/` + params.id)
@@ -52,6 +52,7 @@ export default function Page({params}) {
                             <div className="relative">
                                 <Image src={Avatar} 
                                 width={48}
+                                alt="profile image"
                                 />
                                 <div className="w-3 h-3 bg-success border border-white rounded-full absolute right-0 bottom-0">
                                 </div>
@@ -89,11 +90,7 @@ export default function Page({params}) {
                             Add Comments
                         </button>
                     }
-                        <button 
-                        onClick={()=>document.getElementById('my_modal_1').showModal()}
-                        className="px-3 py-4 border border-success text-success font-bold rounded-lg mt-5 md:hidden">
-                            Add Comments
-                        </button>
+                    <CommentMobile post_id={posts._id} user_id={state._id} />
                     {
                     openComment &&
                     <Comment setOpenComment={setOpenComment} post_id={posts._id} user_id={state._id}/>
@@ -112,14 +109,16 @@ export default function Page({params}) {
                                             />
                                         </div>
                                         <span className='font-bold'>
-                                            {comment.user_id}
+                                            {comment?.user_id?.firstName}
                                         </span>
                                         <span className="text-grey300">
-                                            12h. ago
+                                            {
+                                                formatDistanceToNow(new Date(comment.publishDate), { addSuffix: true })
+                                            }
                                         </span>
                                     </div>
                                     <p className="pl-14">
-                                        {comment.comment}
+                                        {comment?.comment}
                                     </p>
                                 </article>
                             );
