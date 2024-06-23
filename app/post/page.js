@@ -13,17 +13,17 @@ import axios from "axios";
 export default function Page() {
 
   const [posts , setPosts] = useState([])
-  const [keyword , setKeyword] =useState('')
+  const [keyword , setKeyword] = useState('')
   const {state} = useAuth()
 
   const getPosts = async () => {
-    const result = await axios.get(`http://localhost:5000/posts?user_id=${state._id}`)
+    const result = await axios.get(`http://localhost:5000/posts/?user_id=${state._id}?keyword=${keyword}`)
     setPosts(result.data)
   }
 
   useEffect(()=>{
     getPosts()
-  },[keyword])
+  },[keyword , posts])
 
   return (
     <div className="flex w-full min-h-screen">
@@ -57,6 +57,12 @@ export default function Page() {
             })
           }
         </div>
+        {
+          posts.length === 0 &&             
+          <div className="h-80 flex w-full justify-center items-center">
+            <p>You don't have post. You can create it! </p>
+          </div>
+          }
       </main>
     </div>
   );

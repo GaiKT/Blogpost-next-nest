@@ -38,7 +38,7 @@ const DropdownCreatePost = ({communitySet}) => {
             menu.map((menu , index)=>{
               if(index === community){
                 return (
-                  <li onClick={()=>handleClick(index)}>
+                  <li key={index} onClick={()=>handleClick(index)}>
                     <a className='flex w-full justify-between bg-green100 rounded-none'>{menu} <FontAwesomeIcon icon={faCheck} width={10}/></a>
                   </li>
                 )

@@ -13,7 +13,7 @@ import { useAuth } from "@/contexts/authcontext";
 export default function Home() {
 
   const [posts , setPosts] = useState([])
-  const [keyword , setKeyword] =useState('')
+  const [keyword , setKeyword] = useState('')
   const {state} = useAuth()
 
   const getPosts = async () => {
@@ -27,7 +27,7 @@ export default function Home() {
   },[keyword])
 
   return (
-    <div className="flex w-full">
+    <div className="flex w-full min-h-screen">
       <Sidebar/>
       <main className="flex flex-col gap-5 md:w-4/6 p-6">
         <div className="flex items-center gap-2">
@@ -35,11 +35,11 @@ export default function Home() {
             <FontAwesomeIcon icon={faSearch} width={20}/>
             <input type="text" 
             onChange={(e)=>{setKeyword(e.target.value)}}
-            className="bg-grey100 w-full outline-none" 
+            className="w-full outline-none bg-grey100" 
             placeholder="Search" />
           </label> 
           <div className="flex gap-2 items-center">
-            <Dropdown/>
+            <Dropdown communitySet={setKeyword}/>
             <Createpost/>
           </div>
         </div>

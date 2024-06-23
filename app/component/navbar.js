@@ -1,9 +1,15 @@
+"use client"
+
 import React from 'react'
 import BergerbarIcon from '../image/berger-icon.png'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useAuth } from '@/contexts/authcontext' 
+import avatar from "../image/Avatar.png"
 
 export default function Navbar() {
+
+  const {state} = useAuth()
 
   return (
     <>
@@ -12,7 +18,18 @@ export default function Navbar() {
         <h1 className='font-castoro italic'>
             a Board
         </h1>
-        <div>
+
+        {
+          state?.login ? 
+          
+          <div className='flex gap-5 items-center max-md:hidden'>
+            <p>{state?.firstName}</p>
+            <Image src={avatar} width={40} height={40} alt='profile'/>
+          </div>
+
+          :         
+          
+          <div>
             <Link href={'/auth/login'}>
             <button className='py-2 px-4 rounded-md bg-success max-md:hidden'>
                 Sign in
@@ -25,6 +42,7 @@ export default function Navbar() {
             </button>
             </Link>
         </div>
+        }
     </nav>
     </>
     

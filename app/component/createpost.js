@@ -18,7 +18,8 @@ export default function Createpost({user_id}) {
       community : community,
       user_id : user_id
     })
-    console.log(result)
+    comsole.log(result)
+
     } catch (error) {
       
     }
