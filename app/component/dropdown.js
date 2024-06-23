@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 
 const Dropdown = ({communitySet}) => {
 
-  const menu = ['Choose a community','History' , 'Food' , 'Pets' , 'Health', 'Fashion' , 'Exercise' , 'Others' ]
+  const menu = ['Choose a community','History', 'Food' , 'Pets' , 'Health', 'Fashion' , 'Exercise' , 'Others' ]
 
   const [community , setCommunity] = useState(0)
 
@@ -18,7 +18,11 @@ const Dropdown = ({communitySet}) => {
   };
 
   useEffect(()=>{
-  communitySet(menu[community])
+
+    if(community !== 0) {
+      communitySet(menu[community])
+    }
+  
   },[community])
 
   return (
@@ -66,41 +70,28 @@ const Dropdown = ({communitySet}) => {
             <ul tabIndex={0}
                 className="model-box dropdown-content z-[1] menu p-0 shadow bg-base-100 rounded-lg w-52"
                 >
-                <li onClick={handleClick}>
-                    <form method="dialog" className='flex w-full justify-between rounded-none'>
-                        <button>History</button>    
-                    </form>
-                </li>
-                <li onClick={handleClick}>
-                    <form method="dialog" className='flex w-full justify-between rounded-none'>
-                        <button>Food</button><FontAwesomeIcon icon={faCheck} width={10}/>
-                    </form>
-                </li>
-                <li onClick={handleClick}>
-                    <form method="dialog" className='flex w-full justify-between rounded-none'>
-                        <button>Pets</button>
-                    </form>
-                </li>
-                <li onClick={handleClick}>
-                    <form method="dialog" className='flex w-full justify-between rounded-none'>
-                        <button>Health</button>
-                    </form>
-                </li>
-                <li onClick={handleClick}>
-                    <form method="dialog" className='flex w-full justify-between rounded-none'>
-                        <button>Fashion</button>
-                    </form>
-                </li>
-                <li onClick={handleClick}>
-                    <form method="dialog" className='flex w-full justify-between rounded-none'>
-                        <button>Exercise</button>
-                    </form>
-                </li>
-                <li onClick={handleClick}>
-                    <form method="dialog" className='flex w-full justify-between rounded-none'>
-                        <button>Others</button>
-                    </form>
-                </li>
+                  {
+                    menu.map((menu , index)=>{
+                      if(index === community){
+                        return (
+                          <li key={index} onClick={()=>handleClick(index)}>
+                            <form method="dialog" className='flex w-full justify-between rounded-none'>
+                                <button className='w-full flex justify-between'>{menu} <FontAwesomeIcon icon={faCheck} width={10}/></button>  
+                            </form>                            
+                          </li>
+                        )
+                      }else {
+                        return (
+                          <li key={index} onClick={()=>handleClick(index)}>
+                            <form method="dialog" className='flex w-full justify-between rounded-none'>
+                                <button>{menu}</button>    
+                            </form>
+                          </li>                  
+                        )
+                      }
+                      
+                    })
+                  }
             </ul>
        </dialog>
     </>

@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import DropdownCreatePost from './dropdown-create-post';
 import axios from 'axios';
 
-export default function Createpost({user_id}) {
+export default function Createpost({id}) {
 
   const [title , setTitle] = useState('')
   const [discription , setDiscription] = useState('')
@@ -16,12 +16,11 @@ export default function Createpost({user_id}) {
       title : title ,
       discription : discription ,
       community : community,
-      user_id : user_id
+      user_id : id
     })
-    comsole.log(result)
-
+      alert(result.data.message)
     } catch (error) {
-      
+      alert(error)
     }
 
     

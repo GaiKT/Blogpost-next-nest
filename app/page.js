@@ -18,7 +18,6 @@ export default function Home() {
 
   const getPosts = async () => {
     const result = await axios.get('http://localhost:5000/posts?keyword=' + keyword)
-    console.log(result)
     setPosts(result.data)
   }
 
@@ -40,7 +39,7 @@ export default function Home() {
           </label> 
           <div className="flex gap-2 items-center">
             <Dropdown communitySet={setKeyword}/>
-            <Createpost/>
+            <Createpost id={state._id}/>
           </div>
         </div>
         <div className="bg-white rounded-lg">
