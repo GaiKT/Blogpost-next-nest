@@ -18,7 +18,13 @@ const DropdownCreatePost = ({communitySet}) => {
   };
 
   useEffect(()=>{
-    communitySet(menu[community])
+
+    if(community !== 0) {
+      communitySet(menu[community])
+    }else{
+      communitySet('')
+    }
+  
   },[community])
 
   return (

@@ -21,6 +21,8 @@ const Dropdown = ({communitySet}) => {
 
     if(community !== 0) {
       communitySet(menu[community])
+    }else{
+      communitySet('')
     }
   
   },[community])
