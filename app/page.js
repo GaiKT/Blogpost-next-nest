@@ -45,7 +45,7 @@ export default function Home() {
         <div className="bg-white rounded-lg">
           {
             posts.map((post , index) =>{
-              return <Post post={post} user={state} key={index}/>
+              return <Post post={post} key={index}/>
             })
           }
         </div>

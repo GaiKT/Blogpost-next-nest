@@ -35,10 +35,7 @@ export default function Navbar() {
               </ul>
             </div>
           </div>
-          
-
           :         
-          
           <div>
             <Link href={'/auth/login'}>
             <button className='py-2 px-4 rounded-md bg-success'>

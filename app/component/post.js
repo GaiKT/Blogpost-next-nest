@@ -5,7 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar , faComment } from '@fortawesome/free-regular-svg-icons'
 import Link from 'next/link'
 
-export default function Post({post , user}) {
+export default function Post({post}) {
+    console.log(post)
   return (
     
         <div className='p-5 w-full border-b border-grey300 relative'>
@@ -20,7 +21,7 @@ export default function Post({post , user}) {
                         width={31}
                         />
                         <span className='text-grey300'>
-                            {user.firstName}
+                          {post?.user_id?.firstName}
                         </span>
                     </div>
                     <p className='bg-[#F3F3F3] w-fit rounded-xl p-2'>

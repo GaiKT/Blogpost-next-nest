@@ -9,21 +9,22 @@ import { useAuth } from '@/contexts/authcontext';
 // Component definition
 export default function SignInPage() {
   // State variables
-  const [username, setUsername] = useState('');
+  const [userName, setUserName] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [dateOfBirth, setDateOfBirth] = useState('');
   
   // Authentication context hook
-  const { login } = useAuth();
+  const { register } = useAuth();
 
-  // Event handler for form submission
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    try {
-      await login(username); // Assuming login function handles authentication
-      // Redirect or handle successful login here
-    } catch (error) {
-      console.error('Login failed:', error.message);
-      // Handle login failure (e.g., show error message to user)
-    }
+      register({
+        username : userName,
+        firstName : firstName,
+        lastName : lastName,
+        dateOfBirth : dateOfBirth
+    }); 
   };
 
   return (
@@ -47,22 +48,46 @@ export default function SignInPage() {
       <div className='md:w-7/12 max-md:flex-1 flex justify-center items-center font-inter text-white'>
         <div className='w-1/2'>
           <h1 className='mb-4'>
-            Sign in
+            Register
           </h1>
           <form onSubmit={handleSubmit} className='flex flex-col gap-2'>
             <input
               type='text'
               className='bg-white rounded-md p-1 text-textcolor'
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder='Username'
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
+              placeholder='Username or email'
               required
             />
+            <input
+              type='text'
+              className='bg-white rounded-md p-1 text-textcolor'
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              placeholder='Firstname'
+              required
+            />
+            <input
+              type='text'
+              className='bg-white rounded-md p-1 text-textcolor'
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              placeholder='Lastname'
+              required
+            />
+            <input
+              type='date'
+              className='bg-white rounded-md p-1 text-textcolor'
+              value={dateOfBirth}
+              onChange={(e) => setDateOfBirth(e.target.value)}
+              placeholder='Date Of Birth'
+              required
+            />                                    
             <button
               type='submit'
               className='w-full rounded-md bg-success p-1'
             >
-              Sign in
+              Register now
             </button>
           </form>
         </div>

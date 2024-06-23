@@ -18,6 +18,19 @@ function AuthProvider({ children }) {
     }
   },[]);
 
+  const register = async (bodyData) => {
+    try {
+      const result = await axios.post('http://localhost:5000/users' , {...bodyData})
+      if(result) {
+        alert('register succesfully')
+        router.push('/auth/login')
+      }
+  } catch (error) {
+      alert('oop! haave someing wrong. try again later' + error)
+      router.push('/auth/register')
+  }
+  }
+
   const login = async (username) => {
     try {
         const result = await axios.get('http://localhost:5000/users?username=' + username)
@@ -27,7 +40,8 @@ function AuthProvider({ children }) {
             router.push('/')
         }
     } catch (error) {
-        console.log(error)
+        alert('user not found pless register before')
+        router.push('/auth/register')
     }
   };
 
@@ -44,7 +58,7 @@ function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ state, login, logout }}>
+    <AuthContext.Provider value={{ state, login, logout , register }}>
       {children}
     </AuthContext.Provider>
   );
