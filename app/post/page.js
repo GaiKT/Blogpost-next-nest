@@ -51,7 +51,7 @@ export default function Page() {
           </label> 
           <div className="flex gap-2 items-center">
             <Dropdown communitySet={setKeyword} />
-            <Createpost id={state._id} />
+            <Createpost id={state._id} refreshPosts={getPosts}/>
           </div>
         </div>
         <div className="bg-white rounded-lg">
@@ -60,9 +60,9 @@ export default function Page() {
               <div className="relative" key={index}>
                 <Post post={post} />
                 <div className="flex gap-4 items-center text-green300 absolute top-5 right-5">
-                  <EditPosts postData={post} tabIndex={index} />
+                  <EditPosts postData={post} tabIndex={index} refreshPosts={getPosts} />
                   <span className="cursor-pointer">
-                    <Modeldelete post={post}/>
+                    <Modeldelete post={post} refreshPosts={getPosts}/>
                   </span>
                 </div>
               </div>

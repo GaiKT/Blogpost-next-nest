@@ -5,7 +5,7 @@ import DropdownCreatePost from './dropdown-create-post';
 import axios from 'axios';
 import { useAuth } from '@/contexts/authcontext';
 
-export default function Createpost({id}) {
+export default function Createpost({id ,refreshPosts}) {
 
   const [title , setTitle] = useState('')
   const [discription , setDiscription] = useState('')
@@ -21,7 +21,8 @@ export default function Createpost({id}) {
       user_id : id
     })
       alert(result.data.message)
-      window.location.reload()
+      document.getElementById('create_post_modal').close();
+      refreshPosts()
     } catch (error) {
       alert(error)
     }

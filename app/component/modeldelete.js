@@ -3,13 +3,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons' 
 import axios from 'axios'
 
-export default function Modeldelete({post}) {
+export default function Modeldelete({post , refreshPosts}) {
     
   const deletePost = async(post_id) => {
     try {
       const result = await axios.delete('http://localhost:5000/posts/' + post_id)
       alert(result.data.message)
-      window.location.reload()
+      refreshPosts()
+      document.getElementById('model_delete').close();
     } catch (error) {
       alert(error)
     }

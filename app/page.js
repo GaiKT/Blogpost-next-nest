@@ -44,7 +44,7 @@ export default function Home() {
             </label> 
             <div className="flex gap-2 items-center">
               <Dropdown communitySet={setKeyword}/>
-              <Createpost id={state._id}/>
+              <Createpost id={state._id} refreshPosts={getPosts}/>
             </div>
           </div>
           <div className="bg-white rounded-lg">

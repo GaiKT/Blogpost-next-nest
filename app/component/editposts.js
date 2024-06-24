@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare} from "@fortawesome/free-solid-svg-icons";
 import axios from 'axios';
 
-export default function EditPosts({postData , tabIndex}) {
+export default function EditPosts({postData , tabIndex , refreshPosts}) {
   const [title , setTitle] = useState(postData.title)
   const [discription , setDiscription] = useState(postData.discription)
   const [community , setCommunity] = useState(postData.community)
@@ -19,7 +19,8 @@ export default function EditPosts({postData , tabIndex}) {
       community : community,
     })
       alert(result.data.message)
-      window.location.reload()
+      document.getElementById(`edit_post_modal_${tabIndex}`).close();
+      refreshPosts()
     } catch (error) {
       alert(error)
     }
