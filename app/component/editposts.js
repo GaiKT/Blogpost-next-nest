@@ -5,11 +5,8 @@ import DropdownCreatePost from './dropdown-create-post';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare} from "@fortawesome/free-solid-svg-icons";
 import axios from 'axios';
-import { useRouter } from 'next/navigation';
 
-
-export default function EditPosts({postData}) {
-  const router = useRouter()
+export default function EditPosts({postData , tabIndex}) {
   const [title , setTitle] = useState(postData.title)
   const [discription , setDiscription] = useState(postData.discription)
   const [community , setCommunity] = useState(postData.community)
@@ -22,7 +19,7 @@ export default function EditPosts({postData}) {
       community : community,
     })
       alert(result.data.message)
-      router.push('/post')
+      window.location.reload()
     } catch (error) {
       alert(error)
     }
@@ -30,12 +27,14 @@ export default function EditPosts({postData}) {
 
   return (
     <>
-      <span className="cursor-pointer"
-      onClick={()=>document.getElementById('edit_post_modal').showModal()}> 
-        <FontAwesomeIcon icon={faPenToSquare} width={16}/>
-      </span>
+      <div className="tooltip" data-tip="Edit this post">
+        <span className="cursor-pointer"
+        onClick={()=>document.getElementById(`edit_post_modal_${tabIndex}`).showModal()}> 
+          <FontAwesomeIcon icon={faPenToSquare} width={16}/>
+        </span>
+      </div>
 
-      <dialog id="edit_post_modal" className="modal">
+      <dialog id={`edit_post_modal_${tabIndex}`} className="modal">
         <div className="modal-box max-md:w-10/12">
           <form method="dialog">
             <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>

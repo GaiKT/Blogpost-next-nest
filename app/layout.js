@@ -1,5 +1,4 @@
 import "./globals.css";
-import Navbar from "./component/navbar";
 import { AuthProvider } from "@/contexts/authcontext";
 
 export const metadata = {
@@ -12,7 +11,6 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body suppressHydrationWarning={true} className='bg-grey100 font-inter'>
         <AuthProvider>
-          <Navbar/>
           {children}
         </AuthProvider>
       </body>

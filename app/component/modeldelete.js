@@ -1,13 +1,14 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons' 
+import axios from 'axios'
 
 export default function Modeldelete({post}) {
     
   const deletePost = async(post_id) => {
     try {
       const result = await axios.delete('http://localhost:5000/posts/' + post_id)
-      alert(result)
+      alert(result.data.message)
       window.location.reload()
     } catch (error) {
       alert(error)
@@ -15,10 +16,11 @@ export default function Modeldelete({post}) {
   }
   
   return (
-    <> 
-        <span className="cursor-pointer" onClick={()=>document.getElementById('model_delete').showModal()}>
-            <FontAwesomeIcon icon={faTrash} width={16}/>
-        </span>
+    <>  <div className="tooltip" data-tip="Delete this post">
+          <span className="cursor-pointer" onClick={()=>document.getElementById('model_delete').showModal()}>
+              <FontAwesomeIcon icon={faTrash} width={16}/>
+          </span>
+        </div>
 
         <dialog id="model_delete" className="modal">
         <div className="modal-box text-textcolor text-center">

@@ -18,7 +18,6 @@ export default function Page({params}) {
   const [openComment , setOpenComment] = useState(false)
   const [posts , setPosts] = useState({})
   const {state} = useAuth()
-  console.log(posts)
 
   const getPosts = async () => {
     const result = await axios.get(`http://localhost:5000/posts/` + params.id)
@@ -30,9 +29,7 @@ export default function Page({params}) {
   },[])
 
   return (
-    <div className="flex w-full min-h-screen">
-      <Sidebar/>
-      <main className="flex flex-col gap-5 bg-white w-full p-6">
+    <main className="flex flex-col gap-5 bg-white w-full p-6">
         <div className="md:w-5/6">
             {/* go back button */}
             <button className="p-[10px] rounded-full bg-green100 mb-6">
@@ -58,10 +55,10 @@ export default function Page({params}) {
                                 </div>
                             </div>
                             <span className='font-bold'>
-                                {state.firstName}
+                                {posts.user_id?.firstName}
                             </span>
                             <span className="text-grey300">
-                                5mo. ago
+                                { posts.publishDate ? formatDistanceToNow(new Date(posts.publishDate), { addSuffix: true }) : ''}
                             </span>
                         </div>
                         <p className='bg-[#F3F3F3] w-fit rounded-xl p-1'>
@@ -127,7 +124,6 @@ export default function Page({params}) {
                 </div>
             </div>
         </div>
-      </main>
-    </div>
+    </main>
   );
 }

@@ -3,13 +3,14 @@
 import React, { useState } from 'react'
 import DropdownCreatePost from './dropdown-create-post';
 import axios from 'axios';
-import Router from 'next/router';
+import { useAuth } from '@/contexts/authcontext';
 
 export default function Createpost({id}) {
 
   const [title , setTitle] = useState('')
   const [discription , setDiscription] = useState('')
   const [community , setCommunity] = useState('')
+  const {state} = useAuth()
 
   const createPost = async () => {
     try {
@@ -20,7 +21,7 @@ export default function Createpost({id}) {
       user_id : id
     })
       alert(result.data.message)
-      Router.reload()
+      window.location.reload()
     } catch (error) {
       alert(error)
     }
@@ -31,11 +32,14 @@ export default function Createpost({id}) {
 
   return (
     <>
-      <button 
-      onClick={()=>document.getElementById('create_post_modal').showModal()}
-      className="px-4 py-2 bg-success rounded-md min-w-28 text-white">
-        Create +
-      </button>
+      <div className="tooltip" data-tip={!state.login ? 'Please login for create your post.' : 'Create Your posts'}>
+        <button 
+        disabled={!state.login}
+        onClick={()=>document.getElementById('create_post_modal').showModal()}
+        className="px-4 py-2 bg-success rounded-md min-w-28 text-white">
+          Create +
+        </button>
+      </div>
 
       <dialog id="create_post_modal" className="modal">
         <div className="modal-box max-md:w-10/12">

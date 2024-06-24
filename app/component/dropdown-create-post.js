@@ -7,7 +7,7 @@ const DropdownCreatePost = ({communitySet , commu}) => {
 
   const menu = ['Choose a community','History' , 'Food' , 'Pets' , 'Health', 'Fashion' , 'Exercise' , 'Others' ]
 
-  const [community , setCommunity] = useState(menu.indexOf(commu))
+  const [community , setCommunity] = useState(commu ? menu.indexOf(commu) : 0)
 
   const handleClick = (index) => {
     setCommunity(index)
