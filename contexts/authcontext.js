@@ -2,6 +2,7 @@
 import React, { useEffect, useState} from "react";
 import axios from "axios";
 import { useRouter } from 'next/navigation'
+import { toast } from 'react-toastify'
 
 const AuthContext = React.createContext(null);
 
@@ -24,11 +25,11 @@ function AuthProvider({ children }) {
     try {
       const result = await axios.post('http://localhost:5000/users' , {...bodyData})
       if(result) {
-        alert('register succesfully')
+        toast.success('Register successfully')
         router.push('/auth/login')
       }
   } catch (error) {
-      alert('oop! haave someing wrong. try again later' + error)
+      toast.error('oop! have someing wrong. please try again')
       router.push('/auth/register')
   }
   }
@@ -39,10 +40,11 @@ function AuthProvider({ children }) {
         if(result) {
             localStorage.setItem("login", result?.data?.data?._id );
             setState({...result?.data?.data , login: true });
+            toast.success('Login successfully')
             router.push('/')
         }
     } catch (error) {
-        alert('user not found pless register before')
+      toast.error('user not found please register before')
         router.push('/auth/register')
     }
   };

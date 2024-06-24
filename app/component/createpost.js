@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import DropdownCreatePost from './dropdown-create-post';
 import axios from 'axios';
 import { useAuth } from '@/contexts/authcontext';
+import { toast } from 'react-toastify'
 
 export default function Createpost({id ,refreshPosts}) {
 
@@ -11,6 +12,7 @@ export default function Createpost({id ,refreshPosts}) {
   const [discription , setDiscription] = useState('')
   const [community , setCommunity] = useState('')
   const {state} = useAuth()
+  const [error , setError] = useState()
 
   const createPost = async () => {
     try {
@@ -20,16 +22,22 @@ export default function Createpost({id ,refreshPosts}) {
       community : community,
       user_id : id
     })
-      alert(result.data.message)
       document.getElementById('create_post_modal').close();
       refreshPosts()
+      toast.success(result.data.message)
     } catch (error) {
-      alert(error)
+      toast.error(error)
+      handleError(error.response?.data?.errors)
     }
-
-    
   }
 
+  const handleError = (arrError) => {
+    const result = {}
+    arrError.map((err)=>{
+      return result[err?.field] = err?.message
+    })
+    setError(result)
+  }
 
   return (
     <>
@@ -50,12 +58,18 @@ export default function Createpost({id ,refreshPosts}) {
           <div className="flex flex-col justify-between gap-3">
             <h1 className="font-bold">Create Post</h1>
             <DropdownCreatePost communitySet={setCommunity}/>
+            {
+              error?.community && <p className='text-error'>{error.community}</p>
+            }           
             <input 
             type="text" 
             placeholder="Title" 
             onChange={(e)=>{setTitle(e.target.value)}}
             value={title}
             className="w-full border border-grayline rounded-lg p-2"/>
+            {
+              error?.title && <p className='text-error'>{error.title}</p>
+            }
             <textarea 
             placeholder="What’s on your mind..."
             onChange={(e)=>{setDiscription(e.target.value)}}
@@ -63,6 +77,9 @@ export default function Createpost({id ,refreshPosts}) {
             className="w-full border border-grayline rounded-lg p-2"
             rows={7}
             />
+            {
+              error?.discription && <p className='text-error'>{error.discription}</p>
+            }
           </div>
           <div className="w-full flex justify-end max-md:flex-col gap-2 mt-3">
             <form method="dialog">

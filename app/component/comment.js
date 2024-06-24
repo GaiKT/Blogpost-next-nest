@@ -1,9 +1,11 @@
 "use client"
 import React, { useState } from 'react'
 import axios from 'axios'
+import { useAuth } from '@/contexts/authcontext';
+import { toast } from 'react-toastify'
 
 {/* Desktop */}
-export function Comment({ post_id, user_id, setOpenComment }) {
+export function Comment({ post_id, user_id, setOpenComment , refreshPosts}) {
   const [comment, setComment] = useState('')
 
   const addComment = async () => {
@@ -13,12 +15,12 @@ export function Comment({ post_id, user_id, setOpenComment }) {
         user_id: user_id,
         post_id: post_id
       })
-      alert('Comment added successfully!')
       setComment('')
+      toast.success('Comment added successfully!')
       setOpenComment(false)
-      window.location.reload()
+      refreshPosts()
     } catch (error) {
-      alert('Error adding comment: ' + error.message)
+      toast.error('Error adding comment: ' + error.message)
     }
   }
 
@@ -39,33 +41,37 @@ export function Comment({ post_id, user_id, setOpenComment }) {
   )
 }
 
-
-
 {/* Mobile */}
-export function CommentMobile({post_id , user_id}) {
+export function CommentMobile({post_id , user_id, refreshPosts}) {
   const [comment,setComment] = useState('') 
+  const {state} = useAuth()
 
   const addComment = async () => {
     try {
-      const result = await axios.post('http://localhost:5000/comments', {
+      await axios.post('http://localhost:5000/comments', {
         comment : comment ,
         user_id : user_id ,
         post_id : post_id
       })
-      alert('added comment complete') 
-      window.location.reload()
+      toast.success('added comment complete') 
+      document.getElementById('add_comment').showModal()
+      setComment('')
+      refreshPosts()
     } catch (error) {
-      alert(error)   
+      toast.error(error.message)   
     }
   }
 
   return (
-    <>
-        <button 
-        onClick={()=>document.getElementById('add_comment').showModal()}
-        className="px-3 py-4 border border-success text-success font-bold rounded-lg mt-5 md:hidden">
-            Add Comments
-        </button>
+    <> 
+        <div className="tooltip" data-tip={!state.login ? 'Please login for create your comment.' : 'Create your comment'}>
+          <button 
+          disabled={!state.login}
+          onClick={()=>document.getElementById('add_comment').showModal()}
+          className="px-3 py-4 border border-success text-success font-bold rounded-lg mt-5 md:hidden">
+              Add Comments
+          </button>
+        </div>
 
         <dialog id="add_comment" className="modal">
             <div className="modal-box">

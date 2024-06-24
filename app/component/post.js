@@ -10,9 +10,6 @@ export default function Post({post}) {
     
         <div className='p-5 w-full border-b border-grey300 relative'>
             <div>
-                {/* <div className='absolute right-3 top-2'>
-                    <FontAwesomeIcon icon={faStar} width={12}/>
-                </div> */}
                 <div className='flex flex-col w-full gap-5 mb-2'>
                     <div className='flex gap-2'>
                         <Image src={Avatar}

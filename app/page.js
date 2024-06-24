@@ -31,7 +31,7 @@ export default function Home() {
   return (
     <>
       <Navbar/>
-      <div className="flex w-full min-h-screen">
+      <div className="flex w-full min-h-screen bg-grey100">
         <Sidebar/>
         <main className="flex flex-col gap-5 md:w-4/6 p-6">
           <div className="flex items-center gap-2">

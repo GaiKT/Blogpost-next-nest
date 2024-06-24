@@ -1,5 +1,7 @@
 import "./globals.css";
 import { AuthProvider } from "@/contexts/authcontext";
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 export const metadata = {
   title: "Create Next App",
@@ -9,9 +11,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body suppressHydrationWarning={true} className='bg-grey100 font-inter'>
+      <body>
         <AuthProvider>
           {children}
+          <ToastContainer />
         </AuthProvider>
       </body>
     </html>

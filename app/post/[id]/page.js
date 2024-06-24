@@ -1,6 +1,5 @@
 "use client"
 
-import Sidebar from "@/app/component/sidebar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft , faStar , faComment } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
@@ -81,16 +80,19 @@ export default function Page({params}) {
                     </div>
                     {
                         !openComment &&
-                        <button 
-                        onClick={()=>{setOpenComment(true)}}
-                        className="px-3 py-4 border border-success text-success font-bold rounded-lg mt-5 max-md:hidden">
-                            Add Comments
-                        </button>
+                        <div className="tooltip" data-tip={!state.login ? 'Please login for create your comment.' : 'Create your comment'}>
+                            <button 
+                            disabled={!state.login}
+                            onClick={()=>{setOpenComment(true)}}
+                            className="px-3 py-4 border border-success text-success font-bold rounded-lg mt-5 max-md:hidden">
+                                Add Comments
+                            </button>
+                        </div>
                     }
-                    <CommentMobile post_id={posts._id} user_id={state._id} />
+                    <CommentMobile post_id={posts._id} user_id={state._id} refreshPosts={getPosts}/>
                     {
                     openComment &&
-                    <Comment setOpenComment={setOpenComment} post_id={posts._id} user_id={state._id}/>
+                    <Comment setOpenComment={setOpenComment} post_id={posts._id} user_id={state._id} refreshPosts={getPosts}/>
                     }
                 </div>
                 {/* Comments */}
