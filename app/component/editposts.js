@@ -5,6 +5,7 @@ import DropdownCreatePost from './dropdown-create-post';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare} from "@fortawesome/free-solid-svg-icons";
 import axios from 'axios';
+import { toast } from 'react-toastify'
 
 export default function EditPosts({postData , tabIndex , refreshPosts}) {
   const [title , setTitle] = useState(postData.title)
@@ -19,7 +20,7 @@ export default function EditPosts({postData , tabIndex , refreshPosts}) {
       discription : discription ,
       community : community,
     })
-      alert(result.data.message)
+      toast.success(result.data.message)
       document.getElementById(`edit_post_modal_${tabIndex}`).close();
       refreshPosts()
     } catch (error) {
