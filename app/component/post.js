@@ -2,11 +2,10 @@ import React from 'react'
 import Avatar from '../image/Avatar.png'
 import Image from 'next/image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faStar , faComment } from '@fortawesome/free-regular-svg-icons'
+import {faComment } from '@fortawesome/free-regular-svg-icons'
 import Link from 'next/link'
 
 export default function Post({post}) {
-    console.log(post)
   return (
     
         <div className='p-5 w-full border-b border-grey300 relative'>

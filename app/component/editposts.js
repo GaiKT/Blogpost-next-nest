@@ -2,49 +2,47 @@
 
 import React, { useState } from 'react'
 import DropdownCreatePost from './dropdown-create-post';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPenToSquare} from "@fortawesome/free-solid-svg-icons";
 import axios from 'axios';
-import Router from 'next/router';
+import { useRouter } from 'next/navigation';
 
-export default function Createpost({id}) {
 
-  const [title , setTitle] = useState('')
-  const [discription , setDiscription] = useState('')
-  const [community , setCommunity] = useState('')
+export default function EditPosts({postData}) {
+  const router = useRouter()
+  const [title , setTitle] = useState(postData.title)
+  const [discription , setDiscription] = useState(postData.discription)
+  const [community , setCommunity] = useState(postData.community)
 
-  const createPost = async () => {
+  const EditPost = async () => {
     try {
-      const result = await axios.post('http://localhost:5000/posts', {
+      const result = await axios.patch('http://localhost:5000/posts/' + postData._id, {
       title : title ,
       discription : discription ,
       community : community,
-      user_id : id
     })
       alert(result.data.message)
-      Router.reload()
+      router.push('/post')
     } catch (error) {
       alert(error)
     }
-
-    
   }
-
 
   return (
     <>
-      <button 
-      onClick={()=>document.getElementById('create_post_modal').showModal()}
-      className="px-4 py-2 bg-success rounded-md min-w-28 text-white">
-        Create +
-      </button>
+      <span className="cursor-pointer"
+      onClick={()=>document.getElementById('edit_post_modal').showModal()}> 
+        <FontAwesomeIcon icon={faPenToSquare} width={16}/>
+      </span>
 
-      <dialog id="create_post_modal" className="modal">
+      <dialog id="edit_post_modal" className="modal">
         <div className="modal-box max-md:w-10/12">
           <form method="dialog">
             <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
           </form>
           <div className="flex flex-col justify-between gap-3">
-            <h1 className="font-bold">Create Post</h1>
-            <DropdownCreatePost communitySet={setCommunity}/>
+            <h1 className="font-bold">Edit Post</h1>
+            <DropdownCreatePost communitySet={setCommunity} commu={postData.community}/>
             <input 
             type="text" 
             placeholder="Title" 
@@ -64,8 +62,8 @@ export default function Createpost({id}) {
               <button className="w-24 max-md:w-full h-10 text-success border border-success rounded-lg ">Cancel</button>
             </form>
             <button className="w-24 max-md:w-full h-10 text-white bg-success rounded-lg m-0 "
-            onClick={createPost}
-            >Post</button>
+            onClick={EditPost}
+            >Confirm</button>
           </div>
         </div>
       </dialog>

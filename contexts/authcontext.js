@@ -7,6 +7,7 @@ const AuthContext = React.createContext(null);
 
 function AuthProvider({ children }) {
   const [state, setState] = useState({});
+  const [loading, setLoading] = useState(true);
   const router = useRouter()
 
   useEffect(() => {
@@ -16,6 +17,7 @@ function AuthProvider({ children }) {
     } else {
       setState({ login: false });
     }
+    setLoading(false);
   },[]);
 
   const register = async (bodyData) => {
@@ -48,7 +50,7 @@ function AuthProvider({ children }) {
   const refresh = async (id) => {
     const result = await axios.get('http://localhost:5000/users/' + id)
     if(result) {
-        setState({...result?.data?.data , login: true });
+        setState({...result.data.data , login: true });
     }
   };
 
@@ -58,7 +60,7 @@ function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ state, login, logout , register }}>
+    <AuthContext.Provider value={{ state, login, logout , register , loading }}>
       {children}
     </AuthContext.Provider>
   );

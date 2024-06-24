@@ -3,11 +3,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown , faCheck } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
 
-const DropdownCreatePost = ({communitySet}) => {
+const DropdownCreatePost = ({communitySet , commu}) => {
 
   const menu = ['Choose a community','History' , 'Food' , 'Pets' , 'Health', 'Fashion' , 'Exercise' , 'Others' ]
 
-  const [community , setCommunity] = useState(0)
+  const [community , setCommunity] = useState(menu.indexOf(commu))
 
   const handleClick = (index) => {
     setCommunity(index)

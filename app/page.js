@@ -49,6 +49,12 @@ export default function Home() {
             })
           }
         </div>
+        {
+          posts.length === 0 &&             
+          <div className="h-80 flex w-full justify-center items-center">
+            <p>You don't have post. You can create it! </p>
+          </div>
+        }
       </main>
     </div>
   );
