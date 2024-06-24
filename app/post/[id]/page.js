@@ -11,12 +11,14 @@ import {Comment , CommentMobile} from "@/app/component/comment";
 import axios from "axios";
 import { useAuth } from "@/contexts/authcontext";
 import { formatDistanceToNow } from 'date-fns';
+import ModeldeleteComment from "@/app/component/model-delete-comment";
 
 export default function Page({params}) {
 
   const [openComment , setOpenComment] = useState(false)
   const [posts , setPosts] = useState({})
   const {state} = useAuth()
+  console.log(state)
 
   const getPosts = async () => {
     const result = await axios.get(`http://localhost:5000/posts/` + params.id)
@@ -100,8 +102,8 @@ export default function Page({params}) {
                     {
                         posts.comments?.map((comment , index)=>{
                             return (
-                                <article key={index}>
-                                    <div className='flex gap-2 items-center'>
+                                <article key={index} className="relative">
+                                    <div className='flex gap-2 items-center '>
                                         <div className="w-10 h-10 rounded-full bg-serface p-2">
                                             <Image src={UserIcon} 
                                             width={48}
@@ -119,6 +121,12 @@ export default function Page({params}) {
                                     <p className="pl-14">
                                         {comment?.comment}
                                     </p>
+                                    {
+                                        state._id === comment.user_id._id &&
+                                        <div className="absolute top-2 right-2 z-50 ">
+                                            <ModeldeleteComment comment={comment} tabindex={index} refreshPosts={getPosts}/>
+                                        </div>
+                                    }
                                 </article>
                             );
                         })
