@@ -1,0 +1,6 @@
+[submodule "client"]
+	path = client
+	url = https://github.com/GaiKT/blogposts-font-end-next.git
+[submodule "server"]
+	path = server
+	url = https://github.com/GaiKT/Blogpost-back-end-nest-ts.git
