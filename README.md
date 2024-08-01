@@ -1,39 +1,54 @@
-ขั้นตอนการติดตั้งเพื่อทดสอบ
-makesure ว่า computer ของคุณมี node อยู่
+## ขั้นตอนการติดตั้งเพื่อทดสอบ
 
-1. ติดตั้ง default mongodb 
-2. clone this repository
-3. cd เข้าไปใน folder client และ server npm install ให้เรียบร้อย
-4. start server ด้วยคำสั่ง npm run start
-5. start client ด้วยคสั่ง npm run dev
-6. enjoy
+**ตรวจสอบให้แน่ใจว่าคอมพิวเตอร์ของคุณมี Node.js ติดตั้งอยู่**
 
---- Port ----
-mododb = localhost:27017
-server = localhost:5000
-client = localhost:3000
-
-application architecture
-
-frontend  
-next.js ที่ใช้ javascript เพราะว่า code จะมีความ flexible มากกว่า typescript เปลี่ยน tpye ได้ง่ายเหมาะสำหรับการทำ ui component มากกว่า
-
-backend 
-nest.ts ใช้ typescript เพื่อควบคุม type ของข้อมูลต่างๆที่จะเข้า database ได้ง่าย
-mongobd เป็น nosql database ใช้สำหรับเก็บ ข้อความหรือบทความได้ง่าย
-
-ใน database จะมี  3 document หลักๆ คือ
-1. users สำหรับเก็บข้อมูล user แต่ละคน
-2. posts สำหรับเก็บข้อมูล post มี ref กับ userId
-3. comments สำหรับเก็บ comments ทั้งหมด field ที่ ref กันมีดังนี้
-   post_id ไว้ระบุว่าเป็น comment ของ post ไหน
-   user_id ไว้ระบุว่า user คนไหนเป็นคน comment
+### 1. ติดตั้ง MongoDB (เวอร์ชัน default)
+### 2. Clone repository นี้:
+   ```bash
+   git clone git@github.com:GaiKT/transaction-broadcasting.git
+   # หรือ
+   git clone https://github.com/GaiKT/transaction-broadcasting.git
+   ```
+### 3. เข้าไปที่โฟลเดอร์ client และ server และติดตั้ง dependencies ด้วยคำสั่ง:
+   ```bash
+   cd client
+   npm install
+   cd ../server
+   npm install
+   ```
+### 4. เริ่มต้น server ด้วยคำสั่ง:
+   ```bash
+   npm run start
+   ```
+### 5. เริ่มต้น client ด้วยคำสั่ง:
+   ```bash
+   npm run dev
+   ```
+   Have Fun!
    
-libraries used
-
-1. tailwindcss สำหรับ style สามารถทำงานได้เร็วยิ่งขึ้น
-2. daisiui เป็น libraies ของ tailwindcss เพื่อลดเวลาการทำงานกับ component ที่ต้องใช้เวลาเยอะในการสร้าง
-3. fortawesome ใช้เพื่อใช้ icon component
-4. axios fetch data จาก restAPI
-5. date-fns เพื่อคำนวนเวลาจาก datetime
-6. react-toastif ใช้จัดการ error message ต่างๆ
+   ## Ports
+   - MongoDB: localhost:27017
+   - Server: localhost:5000
+   - Client: localhost:3000
+   
+   ## Application Architecture
+   
+   ### Frontend
+   - Next.js: ใช้ JavaScript เพราะว่าโค้ดจะมีความยืดหยุ่นมากกว่า TypeScript และสามารถเปลี่ยน type ได้ง่าย เหมาะสำหรับการทำ UI components
+   ### Backend
+   - NestJS: ใช้ TypeScript เพื่อควบคุม type ของข้อมูลที่จะเข้า database ได้ง่าย
+   - MongoDB: NoSQL database ใช้สำหรับเก็บข้อความหรือบทความได้ง่าย
+   
+   ### ในฐานข้อมูลจะมี 3 documents หลัก ๆ คือ:
+   1. users: สำหรับเก็บข้อมูลของผู้ใช้แต่ละคน
+   2. posts: สำหรับเก็บข้อมูลของโพสต์ ซึ่งมีการเชื่อมโยงกับ userId
+   3.  comments: สำหรับเก็บความคิดเห็นทั้งหมด มี fields ที่เชื่อมโยงกันดังนี้:
+       - post_id: ระบุว่าเป็นความคิดเห็นของโพสต์ไหน
+       - user_id: ระบุว่าเป็นความคิดเห็นของผู้ใช้คนไหน
+   ### Libraries Used
+   1. TailwindCSS: สำหรับการสไตล์ สามารถทำงานได้เร็วยิ่งขึ้น
+   2. DaisyUI: เป็น library ของ TailwindCSS เพื่อลดเวลาการทำงานกับ components ที่ใช้เวลานานในการสร้าง
+   3. FontAwesome: ใช้สำหรับ icons components
+   4. Axios: ใช้ fetch data จาก REST API
+   5. date-fns: ใช้สำหรับคำนวณเวลาจาก datetime
+   6. react-toastify: ใช้จัดการ error messages ต่าง ๆ
